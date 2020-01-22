@@ -2,8 +2,8 @@
   "name": "pharmacyx",
   "version": "1.0.0",
   "description": "A scalable Ecommerce Api for Pharmacy stores",
-  "main": "index.js",
   "scripts": {
+    "dev": "nodemon ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/tinumide/PharmacyX/issues"
   },
-  "homepage": "https://github.com/tinumide/PharmacyX#readme"
+  "homepage": "https://github.com/tinumide/PharmacyX#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2",
+    "promise-mysql": "^4.1.1"
+  }
 }
