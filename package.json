@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A scalable Ecommerce Api for Pharmacy stores",
   "scripts": {
-    "dev": "nodemon ./src/app.js",
+    "dev": "nodemon  ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,9 +17,14 @@
   },
   "homepage": "https://github.com/tinumide/PharmacyX#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-validator": "^6.3.1",
+    "method-override": "^3.0.0",
     "nodemon": "^2.0.2",
-    "promise-mysql": "^4.1.1"
+    "promise-mysql": "^4.1.1",
+    "typedi": "^0.8.0"
   }
 }
