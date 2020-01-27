@@ -1,8 +1,11 @@
-const express = require('express')
-router = express.Router()
 
-router.get('/welcome', (req,res) => {
-    console.log('I got here')
+const express = require('express');
+const router = express.Router();
+
+
+router.get('/', (req,res) => {
+    console.log('i\'m in welcome now');
     res.send('hey! welcome here');
-})
+});
+
 module.exports = router;

@@ -4,7 +4,7 @@ const cors = require('cors');
 const expressValidator = require('express-validator');
 const methodOverride = require('method-override');
 
-const routes = require('../../src/routes');
+const routes = require('../routes/index');
 const config = require('../config');
 
 module.exports = async(expressApp)=>{
@@ -13,6 +13,7 @@ module.exports = async(expressApp)=>{
     //check app status
     app.get('/status', (req, res) => {
         res.status(200).end();
+        // res.send('we are up')
     });
     app.head('/status', (req, res) => {
         res.status(200).end();
@@ -30,8 +31,7 @@ module.exports = async(expressApp)=>{
     app.use(bodyParser.urlencoded({'extended':true}));
     
     // load routes
-    app.use('/', routes);
-    console.log('I got here')
+    app.use('/', routes); 
     // cath 404 error
     app.use((req,res,next) =>{
         const err = new Error('Route not found');
