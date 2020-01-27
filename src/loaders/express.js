@@ -30,7 +30,8 @@ module.exports = async(expressApp)=>{
     app.use(bodyParser.urlencoded({'extended':true}));
     
     // load routes
-    // app.use('/', routes);
+    app.use('/', routes);
+    console.log('I got here')
     // cath 404 error
     app.use((req,res,next) =>{
         const err = new Error('Route not found');
