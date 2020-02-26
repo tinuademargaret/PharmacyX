@@ -1,5 +1,9 @@
 /node_modules
 /logs
+/seeders
+/config/config.json
+/src/migrations
+/database.sqlite3
 
 # misc
 .DS_Store
