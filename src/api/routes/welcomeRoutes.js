@@ -1,10 +1,10 @@
 const express = require('express');
-const router = express.Router();
+const route = express.Router();
 
 
 module.exports = (parentRouter) => {
-    router.get('/greet', (req,res,next) => {
+    route.get('/greet', (req,res,next) => {
         res.send('hey! welcome here');
     });
-    parentRouter.use('/welcome', router);
+    parentRouter.use('/welcome', route);
 }

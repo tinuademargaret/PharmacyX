@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     phoneNumber: DataTypes.STRING,
     address: DataTypes.TEXT,
     cardDetails: DataTypes.STRING,
-    cart: DataTypes.ARRAY,
-    order: DataTypes.ARRAY
+    // cart: DataTypes.ARRAY,
+    // order: DataTypes.ARRAY
   }, {});
   User.associate = function(models) {
     // associations can be defined here
@@ -20,3 +20,4 @@ module.exports = (sequelize, DataTypes) => {
   };
   return User;
 };
+

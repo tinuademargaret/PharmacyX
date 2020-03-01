@@ -1,8 +1,11 @@
 const express = require('express');
 const config  = require('./config');
 const app = express();
+const db = require('./models');
 const server = require('./server');
-
+db.sequelize.sync({force:true}).then(()=>{
+    console.log('Drop and re-sync db');
+});
 server(app);
 // const PORT = 3000;
 // app.listen(PORT, () => console.log(`Server is live at port:${PORT}`));
