@@ -1,13 +1,13 @@
 'use strict'
 const bcrypt = require('bcryptjs');
 const db = require('../models')
-const customer = db.user;
+const customer = db.User;
 const customError = require('../utils/error.helpers');
 const createToken = require('../utils/jwt');
 class customerService{
     async register(data){
     try{
-        const currentCustomer = customer.findAll({'email':data.email})
+        const currentCustomer = customer.findAll({where:{'email': data.email}})
         if(currentCustomer.length>0){
             throw new customError({
                 name: "RegistrationError",
@@ -17,11 +17,10 @@ class customerService{
                 field: "email"
             })
         }
-
         const hashedPassword = await bcrypt.hash(data.password, 8);
         data.password = hashedPassword
         customer.create(data)
-        newCustomer = await customer.findAll({'email':data.email});
+        newCustomer = await customer.findAll({where:{'email':data.email}});
         const token = createToken({id:newCustomer.userId, email:newCustomer.email, username:newCustomer.username});
         const response = {
             customer: newCustomer,

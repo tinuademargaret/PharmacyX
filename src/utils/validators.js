@@ -27,4 +27,8 @@ const validateNewCustomer = [
       .isLength({ min: 3 })
       .matches(/\d/)
     ];
+
+module.exports = {
+  validateNewCustomer
+};
     

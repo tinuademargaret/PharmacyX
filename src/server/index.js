@@ -4,7 +4,7 @@ const cors =  require('cors');
 const expressValidator =  require('express-validator');
 
 const routes = require('../api/routes');
-
+const db = require('../models');
 
 
 function startServer(app){
@@ -14,6 +14,11 @@ function startServer(app){
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
     // app.use(expressValidator());
+    db.sequelize.sync({force:true}).then(()=>{
+        console.log('db is up');
+    }).catch((err) => {
+        console.log(err, 'something went wrong with the db')
+    });
     // Health check endpoints
     app.get('/status', (req, res) => { res.status(200).end(); });
     app.head('/status', (req, res) => { res.status(200).end(); });
