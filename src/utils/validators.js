@@ -11,10 +11,10 @@ const validateNewCustomer = [
       .trim()
       .normalizeEmail(),
     
-    check("name")
+    check("username")
       .not()
       .isEmpty()
-      .withMessage("Name cannot be empty")
+      .withMessage("username cannot be empty")
       .trim()
       .escape(),
     

@@ -7,7 +7,10 @@ const createToken = require('../utils/jwt');
 class customerService{
     async register(data){
     try{
-        const currentCustomer = customer.findAll({where:{'email': data.email}})
+        const c = customer.findAll()
+        console.log(c)
+        const currentCustomer = customer.findAll({where:{email: data.email}})
+        console.log(currentCustomer)
         if(currentCustomer.length>0){
             throw new customError({
                 name: "RegistrationError",
@@ -20,7 +23,7 @@ class customerService{
         const hashedPassword = await bcrypt.hash(data.password, 8);
         data.password = hashedPassword
         customer.create(data)
-        newCustomer = await customer.findAll({where:{'email':data.email}});
+        const newCustomer = await customer.findAll({where:{email:data.email}});
         const token = createToken({id:newCustomer.userId, email:newCustomer.email, username:newCustomer.username});
         const response = {
             customer: newCustomer,
