@@ -7,10 +7,7 @@ const createToken = require('../utils/jwt');
 class customerService{
     async register(data){
     try{
-        const c = customer.findAll()
-        console.log(c)
-        const currentCustomer = customer.findAll({where:{email: data.email}})
-        console.log(currentCustomer)
+        const currentCustomer = await customer.findAll({where:{email: data.email}})
         if(currentCustomer.length>0){
             throw new customError({
                 name: "RegistrationError",
@@ -37,6 +34,44 @@ class customerService{
             throw error;
     }
     
+}
+async login(data){
+    try{
+        const currentCustomer = await customer.findOne({where:{email:data.email}})
+        if (!currentCustomer){
+            throw new customError({
+                name: "LoginError",
+                status: 400,
+                code: "AUT_01",
+                message: "invalid customer credentials",
+                field: ["email", "password"]})
+        }
+        const passwordIsValid = await bcrypt.compare(data.password, currentCustomer.password);
+            if(!passwordIsValid){
+                throw new CustomError({
+                    name: "LoginError",
+                    status: 400,
+                    code: "AUTH_01",
+                    message: "invalid customer credentials",
+                    field: ["email", "password"]
+                });
+            }
+            delete currentCustomer.password;
+            const token = createToken({ id: currentCustomer.userId, email: currentCustomer.email });
+            const response = {
+                customer: {
+                    schema: currentCustomer
+                },
+                accessToken: token,
+                expires_in: '24h'
+            }
+
+            return response;
+        
+
+    }catch (error){
+        throw error;
+    }
 }
 }
 

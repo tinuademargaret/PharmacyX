@@ -28,7 +28,10 @@ const validateNewCustomer = [
       .matches(/\d/)
     ];
 
+  const validateLogin = [];
+
 module.exports = {
-  validateNewCustomer
+  validateNewCustomer,
+  validateLogin
 };
     
