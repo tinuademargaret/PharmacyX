@@ -41,7 +41,7 @@ module.exports = async(parentRouter) => {
             const error = new CustomError({
                 name: "LoginError",
                 status: 422,
-                code: "USR_00",
+                code: "USR_01",
                 message: "unable to Login customer",
                 field: [errors]
             });
@@ -62,7 +62,7 @@ module.exports = async(parentRouter) => {
             const error = new CustomError({
                 name: "UpdateError",
                 status: 422,
-                code: "USR_00",
+                code: "USR_02",
                 message: "unable to update customer",
                 field: [errors]
             });
