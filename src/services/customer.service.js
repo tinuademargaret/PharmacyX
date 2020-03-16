@@ -73,7 +73,12 @@ async login(data){
         throw error;
     }
 }
+async update(data, customerId){
+try{
+    
+}catch (error){
+    throw error;
 }
-
-
+}
+}
 module.exports = customerService;
