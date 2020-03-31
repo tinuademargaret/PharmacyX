@@ -56,7 +56,7 @@ module.exports = async(parentRouter) => {
         }
     });
 
-    route.put('/update', validateUpdateCustomer, verifyToken, async(req,res,next)=>{
+    route.put('/update', verifyToken, async(req,res,next)=>{
         const errors = filterError(validationResult(req));
         if (errors){
             const error = new CustomError({

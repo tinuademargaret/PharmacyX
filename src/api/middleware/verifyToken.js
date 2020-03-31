@@ -6,13 +6,13 @@ const PRIVATEKEY  = fs.readFileSync('private.key', 'utf8');
 
 
 const verifyToken = (req, res, next) => {
-  const header = req.get("USER-KEY");
-
+  const header = req.headers.authorization
   if (typeof header !== "undefined") {
-    const bearer = header.split(" ");
-    const token = bearer[1];
+    try{
+          const token = header.slice(7)
 
     req.token = token;
+    
     jwt.verify(token, PRIVATEKEY, function(err, decoded) {
       if (err) {
         return res
@@ -29,7 +29,11 @@ const verifyToken = (req, res, next) => {
       req.decoded = decoded;
       next();
     });
-  } else {
+  } catch(error){
+    throw error;
+  }
+} 
+else {
 
     //If header is undefined return Forbidden (403)
     res.status(403).json({

@@ -14,7 +14,7 @@ function startServer(app){
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
     // app.use(expressValidator());
-    db.sequelize.sync({force:true}).then(()=>{
+    db.sequelize.sync({force:false}).then(()=>{
         console.log('db is up');
     }).catch((err) => {
         console.log(err, 'something went wrong with the db')

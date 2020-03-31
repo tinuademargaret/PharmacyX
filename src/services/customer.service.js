@@ -21,7 +21,8 @@ class customerService{
         data.password = hashedPassword
         customer.create(data)
         const newCustomer = await customer.findAll({where:{email:data.email}});
-        const token = createToken({id:newCustomer.userId, email:newCustomer.email, username:newCustomer.username});
+        const token = createToken({id:newCustomer.id, email:newCustomer.email, username:newCustomer.username});
+        delete newCustomer.dataValues.password;
         const response = {
             customer: newCustomer,
             accessToken: token,
@@ -56,8 +57,8 @@ async login(data){
                     field: ["email", "password"]
                 });
             }
-            delete currentCustomer.password;
-            const token = createToken({ id: currentCustomer.userId, email: currentCustomer.email });
+            delete currentCustomer.dataValues.password;
+            const token = createToken({ id: currentCustomer.id, email: currentCustomer.email });
             const response = {
                 customer: {
                     schema: currentCustomer
@@ -75,7 +76,18 @@ async login(data){
 }
 async update(data, customerId){
 try{
-    
+    if (data.cardDetails){
+        data.cardDetails.toString()
+    }
+    const currentCustomer = await customer.findOne({where:{id:customerId}})
+    currentCustomer.update(data)
+    delete currentCustomer.dataValues.password;
+    const response = {
+        customer: {
+            schema: currentCustomer
+        }
+    }
+    return response
 }catch (error){
     throw error;
 }
