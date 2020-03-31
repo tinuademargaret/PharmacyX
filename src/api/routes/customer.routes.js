@@ -1,16 +1,16 @@
 const route = require('express').Router();
 const customerService = require('../../services/customer.service');
-const {validateNewCustomer} = require('../../utils/validators');
+const { validateNewCustomer,
+        validateLogin,
+        validateUpdateCustomer} = require('../../utils/validators');
 const { filterError, CustomError} = require('../../utils/error.helpers');
 const { validationResult } = require("express-validator/check");
-
+const verifyToken = require("../middleware")
 module.exports = async(parentRouter) => {
-    // app.use(route);
-    // post requests
 
     // sign up
 
-    route.post('/customers', validateNewCustomer, async(req, res, next) =>{
+    route.post('/signup', validateNewCustomer, async(req, res, next) =>{
         const errors = filterError(validationResult(req));
         if (errors){
             const error = new CustomError({
@@ -23,8 +23,8 @@ module.exports = async(parentRouter) => {
             return next(error);
         }
         try{
-            const response = await customerService.register(req.body);
-            console.log('i love you');
+            cs = new customerService()
+            const response = await cs.register(req.body);
             return res.json(response);
         } catch (error) {
             return next(error);
@@ -33,7 +33,52 @@ module.exports = async(parentRouter) => {
 
     });
 
-    parentRouter.use('/auth', route);
+    //sign in
+
+    route.post('/signin', validateLogin, async(req,res,next)=>{
+        const errors = filterError(validationResult(req));
+        if (errors){
+            const error = new CustomError({
+                name: "LoginError",
+                status: 422,
+                code: "USR_01",
+                message: "unable to Login customer",
+                field: [errors]
+            });
+            return next(error);
+        }
+        try{
+            cs = new customerService()
+            const response = await cs.login(req.body);
+            return res.json(response);
+        }catch(error){
+            return next(error);
+        }
+    });
+
+    route.put('/update', verifyToken, async(req,res,next)=>{
+        const errors = filterError(validationResult(req));
+        if (errors){
+            const error = new CustomError({
+                name: "UpdateError",
+                status: 422,
+                code: "USR_02",
+                message: "unable to update customer",
+                field: [errors]
+            });
+            return next(error);
+        }
+        try{
+            const customerId = req.decoded.id;
+            const cs = new customerService();
+            const response = await cs.update(req.body, customerId);
+            return res.json(response);
+        }catch (error){
+            return next(error);
+        }
+    })
+
+    parentRouter.use('/customer', route);
 }
 
 
