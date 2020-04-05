@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Cart = sequelize.define('Cart', {
-    cartId: DataTypes.INTEGER,
+    cart_id = DataTypes.STRING,
     totalAmount: DataTypes.STRING
   }, {});
   Cart.associate = function(models) {

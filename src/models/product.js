@@ -1,10 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Product = sequelize.define('Product', {
-    productId: DataTypes.INTEGER,
     name: DataTypes.STRING,
     image: DataTypes.BLOB,
     description: DataTypes.TEXT,
+    review: DataTypes.TEXT,
+    rating: DataTypes.INTEGER,
     price: DataTypes.STRING,
     quantity: DataTypes.INTEGER
   }, {});
